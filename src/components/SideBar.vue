@@ -18,7 +18,7 @@ export default defineComponent({
   components: { SideBarItem },
   data() {
     return {
-      routes: routes as {[key: string]: Router},
+      routes: routes as any as {[key: string]: Router},
       versions: versions
     };
   },
