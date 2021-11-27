@@ -14,6 +14,6 @@ export interface InnerRouter {
     [keyof: string]: {type: string, example: string},
   },
   responseBody: {
-    token: {type: 'String', example: "UJKGHkjghkssgkdfilghdfiojghfsdgkljdrghidfghkl1223"}
+    [type: string]: {type: string, example: string}
   }
 }
