@@ -1,6 +1,7 @@
 <template>
   <div class="nested-side-bar-item" :class="{selected}" @click="onClick">
     <div class="name">{{ route.name }}</div>
+    <span class="path">{{ route.path }}</span> 
     <div class="method">{{ route.method }}</div>
   </div>
 </template>
@@ -50,6 +51,11 @@ export default defineComponent({
   margin-top: 3px; 
   cursor: pointer;
   user-select: none;
+}
+.path {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-left: 5px;
 }
 .nested-side-bar-item:hover {
   background-color: rgba(255, 255, 255, 0.1);

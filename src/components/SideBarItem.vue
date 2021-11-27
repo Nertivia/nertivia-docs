@@ -49,6 +49,7 @@ export default defineComponent({
 .side-bar-item {
   display: flex;
   flex-direction: column;
+  margin-bottom: 5px;
 }
 .title {
   display: flex;
