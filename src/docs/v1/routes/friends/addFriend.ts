@@ -8,7 +8,4 @@ export default {
     username: {type: 'String', example: "Someone"},
     discriminator: {type: 'String', example: "Owo1"},
   },
-  responseBody: {
-    token: {type: 'String', example: "UJKGHkjghkssgkdfilghdfiojghfsdgkljdrghidfghkl1223"}
-  }
 }

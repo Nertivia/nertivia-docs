@@ -1,3 +1,4 @@
+import { InnerRouter } from './../interfaces/Router';
 import { Router } from '../interfaces/Router';
 import v1Router from './v1/router';
 
@@ -5,6 +6,13 @@ import v1Router from './v1/router';
 export const versions: Array<{[key: string]: Router}> = [v1Router] as any;
 
 export const latestVersion = versions.length;
+
+
+export interface Route {
+  parentRouter: Router;
+  route: InnerRouter;
+  version: number;
+}
 
 export async function getRoute(version: number, categoryPath: string, routePath: string) {
   let route = {... await getAbsoluteRoute(1, categoryPath, routePath), version: 1};

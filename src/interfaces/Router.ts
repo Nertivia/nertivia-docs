@@ -10,10 +10,9 @@ export interface InnerRouter {
   path: string,
   method: string,
   description: string,
-  requestBody: {
-    [keyof: string]: {type: string, example: string},
-  },
-  responseBody: {
-    [type: string]: {type: string, example: string}
-  }
+  requestBody?: Body,
+  responseBody?: Body
+}
+export interface Body {
+  [keyof: string]: {type: string, example: string, optional: boolean}
 }

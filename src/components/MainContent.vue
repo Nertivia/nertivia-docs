@@ -2,25 +2,31 @@
   <div class="main-content" v-if="route">
     <div class="title">{{ route.route.name }}</div>
     <div class="description">{{ route.route.description }}</div>
-    <div class="url-area">
-      <div class="method">{{route.route.method}}</div>
-      <div class="url">{{url}}</div>
-    </div>
+    <MainContentUrlArea :route="route" />
+    <MainContentBodyTable
+      v-if="route.route.requestBody"
+      title="Request Body"
+      :body="route.route.requestBody"
+    />
+    <MainContentBodyTable
+      v-if="route.route.responseBody"
+      title="Response Body"
+      :body="route.route.responseBody"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
-import { getRoute } from "../docs/router";
+import { getRoute, Route } from "../docs/router";
 import { InnerRouter, Router } from "../interfaces/Router";
+import MainContentUrlArea from "./MainContentUrlArea.vue";
+import MainContentBodyTable from "./MainContentBodyTable.vue";
 export default defineComponent({
+  components: { MainContentUrlArea, MainContentBodyTable },
   data() {
     return {
-      route: null as {
-        parentRouter: Router;
-        route: InnerRouter;
-        version: number;
-      } | null,
+      route: null as Route | null,
     };
   },
   async mounted() {
@@ -33,12 +39,6 @@ export default defineComponent({
     },
   },
   computed: {
-    url(): string {
-      const version = this.params.version;
-      const parentPath = this.route?.parentRouter.path;
-      const path = this.route?.route.path;
-      return `https://nertivia.net/api/v${version}${parentPath}${path}`;
-    },
     params() {
       const version = parseInt(
         (this.$route.params.version as string)?.substring(1) || "1"
@@ -62,23 +62,6 @@ export default defineComponent({
   margin-left: 10px;
 }
 
-.url-area {
-  display: flex;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 10px;
-  border-radius:8px;
-}
-.url-area .url {
-  color: rgba(255, 255, 255, 0.8);
-}
-.url-area .method {
-  padding: 3px;
-  margin-right: 10px;
-  font-size: 14px;
-  background-color: rgb(255, 73, 73);
-  border-radius: 4px;
-}
 .title {
   font-size: 24px;
 }
