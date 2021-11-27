@@ -5,7 +5,7 @@
       <span class="path">{{ route.path }}</span> 
     </div>
     <div class="list" v-if="collapsed">
-      <SideBarNestedItem v-for="route in routes" :route="route" />
+      <SideBarNestedItem v-for="nestedRoute in routes" :route="nestedRoute" :parentRoute="route" />
     </div>
   </div>
 </template>
@@ -25,8 +25,14 @@ export default defineComponent({
   data() {
     return {
       collapsed: false,
-      routes: [] as InnerRouter[],
+      routes: {} as {[key: string]: InnerRouter},
     };
+  },
+  mounted() {
+    const selectedCategory = "/" + this.$route.params.category;
+    if (selectedCategory === this.route.path) {
+      this.toggleCollapse();
+    }
   },
   methods: {
     async toggleCollapse() {

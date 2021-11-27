@@ -1,3 +1,7 @@
 import createAccount from "./createAccount";
+import Login from "./Login";
 
-export default [createAccount]
+export default {
+  "/create": createAccount,
+  "/login": Login,
+}

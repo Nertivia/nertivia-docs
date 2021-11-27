@@ -1,5 +1,5 @@
 <template>
-  <div class="nested-side-bar-item">
+  <div class="nested-side-bar-item" :class="{selected}" @click="onClick">
     <div class="name">{{ route.name }}</div>
     <div class="method">{{ route.method }}</div>
   </div>
@@ -10,11 +10,31 @@ import { defineComponent, PropType } from "@vue/runtime-core";
 import { InnerRouter, Router } from "../interfaces/Router";
 export default defineComponent({
   props: {
+    parentRoute: {
+      type: Object as PropType<Router>,
+      required: true,
+    },
     route: {
       type: Object as PropType<InnerRouter>,
       required: true,
     },
   },
+  computed: {
+    selected() {
+      const category = "/" + this.$route.params.category;
+      if (category !== this.parentRoute.path) return false;
+      const route = "/" + this.$route.path.split("/").splice(3).join("/");
+      return route === this.route.path;
+    }
+  },
+  methods: {
+    onClick() {
+      const version = this.$route.params.version;
+      const category = this.parentRoute.path;
+      const route = this.route.path;
+      this.$router.push(`/${version}${category}${route}`)
+    }
+  }
 });
 </script>
 
@@ -32,6 +52,9 @@ export default defineComponent({
   user-select: none;
 }
 .nested-side-bar-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.nested-side-bar-item.selected {
   background-color: rgba(255, 255, 255, 0.1);
 }
 .method {

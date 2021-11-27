@@ -2,12 +2,12 @@ export interface Router {
   name: string,
   path: string,
   description: "Interact with the users API.",
-  routes(): Promise<InnerRouter[]>
+  routes(): Promise<{[key: string]: InnerRouter}>
 }
 
 export interface InnerRouter {
   name: string,
-  url: string,
+  path: string,
   method: string,
   description: string,
   requestBody: {

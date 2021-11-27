@@ -1,11 +1,10 @@
 export default {
-  name: "Create Account",
-  path: "/create",
+  name: "Login",
+  path: "/login",
   method: "POST",
-  description: "Creates an account.",
+  description: "Login to an account. Returns your token.",
   requestBody: {
     email: {type: 'String', example: "someone@domain.com"},
-    username: {type: 'String', example: "Someone"},
     password: {type: 'String', example: "SuperSecure123"},
   },
   responseBody: {
