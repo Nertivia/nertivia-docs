@@ -1,9 +1,10 @@
 import User from "../../models/User";
 
 export default {
-  name: "Add Friend",
-  path: "/add",
+  name: "Accept Friend",
+  path: "/accept",
   method: "POST",
-  description: "Add a friend",
+  description: "Accept a friend request",
   requestBody: User,
+
 }
