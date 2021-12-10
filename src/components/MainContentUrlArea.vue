@@ -17,11 +17,19 @@ export default defineComponent({
     }
   },
   computed: {
+    params() {
+      const pathMatch = this.$route.params.pathMatch;
+      if (!pathMatch)  {
+        const version = this.$route.params.version;
+        const category = this.$route.params.category;
+        const route = this.$route.params.route;
+        return {version, category, route};
+      }
+      const [version, category, ...routes] = pathMatch
+      return {version, category, route: routes.join("/")}
+    },
     url(): string {
-      const version = this.$route.params.version;
-      const parentPath = this.route?.parentRouter.path;
-      const path = this.route?.route.path;
-      return `https://nertivia.net/api/${version}${parentPath}${path}`;
+      return `https://nertivia.net/api/${this.params.version}/${this.params.category}/${this.params.route}`;
     },
   }
 })
