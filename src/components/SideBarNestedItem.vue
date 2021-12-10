@@ -21,19 +21,28 @@ export default defineComponent({
     },
   },
   computed: {
+    itemRoutePath() {
+      return `/${this.params.version}${this.parentRoute.path}${this.route.path}`;
+    },
     selected() {
-      const category = "/" + this.$route.params.category;
-      if (category !== this.parentRoute.path) return false;
-      const route = "/" + this.$route.path.split("/").splice(3).join("/");
-      return route === this.route.path;
+      return this.itemRoutePath === this.$route.path;
+    },
+    params() {
+      const pathMatch = this.$route.params.pathMatch;
+      if (!pathMatch)  {
+        const version = this.$route.params.version;
+        const category = this.parentRoute.path;
+        const route = this.route.path;
+        return {version, category, route};
+      }
+      const [version, category, ...routes] = pathMatch
+      return {version, category, route: routes.join("/")}
     }
   },
   methods: {
     onClick() {
-      const version = this.$route.params.version;
-      const category = this.parentRoute.path;
-      const route = this.route.path;
-      this.$router.push(`/${version}${category}${route}`)
+
+      this.$router.push(`/${this.params.version}${this.parentRoute.path}${this.route.path}`)
     }
   }
 });

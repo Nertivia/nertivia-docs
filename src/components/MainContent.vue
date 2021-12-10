@@ -1,5 +1,5 @@
 <template>
-  <div class="main-content" v-if="route">
+  <div class="main-content" v-if="route?.route">
     <div class="title">{{ route.route.name }}</div>
     <div class="description">{{ route.route.description }}</div>
     <MainContentUrlArea :route="route" />
@@ -39,14 +39,20 @@ export default defineComponent({
     },
   },
   computed: {
-    params() {
-      const version = parseInt(
-        (this.$route.params.version as string)?.substring(1) || "1"
-      );
-      const category = "/" + this.$route.params.category;
-      const route = "/" + this.$route.path.split("/").splice(3).join("/");
-      return { version, category, route };
-    },
+    params(): any {
+      const pathMatch = this.$route.params.pathMatch;
+      if (!pathMatch)  {
+        const version = this.$route.params.version;
+        const category = this.$route.params.category;
+        const route = this.$route.params.route;
+        const versionInt = parseInt( (version  as string).substring(1) || "1" );
+
+        return {version: versionInt, category, route};
+      }
+      const [version, category, ...routes] = pathMatch
+      const versionInt = parseInt( version.substring(1) || "1" );
+      return {version: versionInt, category, route: routes.join("/")}
+    }
   },
   watch: {
     params() {

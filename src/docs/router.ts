@@ -26,7 +26,7 @@ export async function getRoute(version: number, categoryPath: string, routePath:
 }
 
 export async function getAbsoluteRoute(version: number, categoryPath: string, routePath: string) {
-  const router = versions[version - 1][categoryPath];
+  const router = versions[version - 1][ "/" + categoryPath];
   const routes = await router?.routes();
-  return {parentRouter: router, route: routes?.[routePath]};
+  return {parentRouter: router, route: routes?.["/" + routePath]};
 }

@@ -2,7 +2,7 @@
   <div class="side-bar">
     <div class="header">Nertivia Docs</div>
     <div class="selectors">
-      <div class="selector" :class="{selected: selectedVersion === `v${i + 1}`}" v-for="(version, i) in versions">v{{i + 1}}</div>
+      <div class="selector" :class="{selected: params.version === `v${i + 1}`}" v-for="(version, i) in versions">v{{i + 1}}</div>
     </div>
     <SideBarItem v-for="route in routes" :key="route.path" :route="route" />
   </div>
@@ -23,8 +23,16 @@ export default defineComponent({
     };
   },
   computed: {
-    selectedVersion() {
-      return this.$route.params.version
+    params() {
+      const pathMatch = this.$route.params.pathMatch;
+      if (!pathMatch)  {
+        const version = this.$route.params.version;
+        const category = this.$route.params.category;
+        const route = this.$route.params.route;
+        return {version, category, route};
+      }
+      const [version, category, ...routes] = pathMatch
+      return {version, category, route: routes.join("/")}
     }
   }
 });
@@ -32,7 +40,7 @@ export default defineComponent({
 
 <style scoped>
 .side-bar {
-  width: 250px;
+  width: 270px;
   flex-shrink: 0;
   background-color: rgba(0, 0, 0, 0.2);
   height: 100%;

@@ -29,9 +29,22 @@ export default defineComponent({
     };
   },
   mounted() {
-    const selectedCategory = "/" + this.$route.params.category;
+    const selectedCategory = "/" + this.params.category;
     if (selectedCategory === this.route.path) {
       this.toggleCollapse();
+    }
+  },
+  computed: {
+    params() {
+      const pathMatch = this.$route.params.pathMatch;
+      if (!pathMatch)  {
+        const version = this.$route.params.version;
+        const category = this.$route.params.category;
+        const route = this.$route.params.route;
+        return {version, category, route};
+      }
+      const [version, category, ...routes] = pathMatch
+      return {version, category, route: routes.join("/")}
     }
   },
   methods: {
