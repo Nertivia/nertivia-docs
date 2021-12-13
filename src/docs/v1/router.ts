@@ -10,5 +10,11 @@ export default {
     path: "/relationships",
     description: "Interact with the relationships API.",
     routes: async () => (await import('./routes/relationships/routes')).default
+  },
+  "/presences": {
+    name: "Presences",
+    path: "/presences",
+    description: "Interact with the presences API.",
+    routes: async () => (await import('./routes/presences/routes')).default
   }
 }
